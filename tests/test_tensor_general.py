@@ -259,6 +259,7 @@ def test_bmm(dims, backend):
         rtol=1e-5
     )
 
+
 @pytest.mark.parametrize("backend", backend_tests)
 def test_view_permute(
     backend: str
@@ -276,7 +277,7 @@ def test_view_permute(
         shared[backend],
         requires_grad
     )
-    
+
     kv = k.view(2, 2)
     kT = kv.permute(1,0)
     res = q @ kT
@@ -285,10 +286,9 @@ def test_view_permute(
         shared[backend],
         requires_grad,
     ))
-    
+
     np.testing.assert_allclose(
       k.grad.to_numpy(), 
       np.array([[2, 4], [2, 4]]),
       atol=1e-5, rtol=1e-5
     )
-    
