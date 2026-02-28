@@ -211,7 +211,8 @@ def logsumexp(input: Tensor, dim: int) -> Tensor:
             NOTE: minitorch functions/tensor functions typically keep dimensions if you provide a dimensions.
     """  
     ### BEGIN ASSIGN3_1
-    raise NotImplementedError
+    mx = Max.apply(input,  tensor([dim]))
+    return (input - mx).exp().sum(dim=dim).log() + mx
     ### END ASSIGN3_1
 
 
