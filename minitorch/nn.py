@@ -228,8 +228,11 @@ def softmax_loss(logits: Tensor, target: Tensor) -> Tensor:
         loss : (minibatch, )
     """
     result = None
-    batch_size = logits.shape[0]
+    batch_size, c = logits.shape[0], logits.shape[1]
+    
     ### BEGIN ASSIGN3_1
-    raise NotImplementedError
+    mask = one_hot(target, c)
+    log_probs =  logsoftmax(logits, dim=1)
+    result = -1 * ((mask * log_probs).sum(dim=1))
     ### END ASSIGN3_1
     return result.view(batch_size,)
