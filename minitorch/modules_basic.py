@@ -92,9 +92,20 @@ class Linear(Module):
             bias   - The learnable weights of shape (out_size, ) initialized from Uniform(-1/sqrt(in_size), 1/sqrt(in_size)).
         """
         self.out_size = out_size
+        self.in_size = in_size
         ### BEGIN ASSIGN3_2
-        raise NotImplementedError
+        self.weights = self._init_param(in_size, out_size, backend=backend)
+        if bias:
+            self.bias = self._init_param(out_size, backend=backend)
+        else:
+            self.bias = None
         ### END ASSIGN3_2
+
+    def _init_param(self, *shape, backend: TensorBackend):
+        # Uniform(-1/sqrt(in_size), 1/sqrt(in_size))
+        inv = 1.0 / (self.in_size ** 0.5)
+        r = 2 * (rand(shape, backend = backend) - 0.5) * inv
+        return Parameter(r)
 
     def forward(self, x: Tensor):
         """Applies a linear transformation to the incoming data.
@@ -107,7 +118,10 @@ class Linear(Module):
         """
         batch, in_size = x.shape
         ### BEGIN ASSIGN3_2
-        raise NotImplementedError
+        out = x @ self.weights.value
+        if self.bias is not None:
+            out = out + self.bias.value
+        return out
         ### END ASSIGN3_2
 
 
