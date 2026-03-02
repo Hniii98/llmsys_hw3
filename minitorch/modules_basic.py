@@ -73,7 +73,13 @@ class Dropout(Module):
         Note: If p_dropout is 0, directly return the input tensor. Otherwise, the random seed may cause problems
         """
         ### BEGIN ASSIGN3_2
-        raise NotImplementedError
+        if self.training == False or self.p_dropout == 0:
+            return x
+
+        mask = np.random.binomial(1, self.p_dropout, size=x.shape)
+        m = tensor_from_numpy(mask, backend=x.backend)
+        out = (x * m) / (1 - self.p_dropout)
+        return out
         ### END ASSIGN3_2
 
 
