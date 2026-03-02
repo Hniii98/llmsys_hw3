@@ -164,5 +164,11 @@ class LayerNorm1d(Module):
         """
         batch, dim = x.shape
         ### BEGIN ASSIGN3_2
-        raise NotImplementedError
+        m = x.mean(dim=1)
+        v = x.var(dim=1)
+        b = self.bias.value
+        w = self.weights.value
+        inv = 1.0 / ((v + self.eps) ** 0.5)
+        out = w * ((x - m) * inv) + b
+        return out
         ### END ASSIGN3_2
