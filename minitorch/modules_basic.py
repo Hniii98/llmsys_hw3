@@ -147,7 +147,8 @@ class LayerNorm1d(Module):
         self.dim = dim
         self.eps = eps
         ### BEGIN ASSIGN3_2
-        raise NotImplementedError
+        self.weights = Parameter(ones(shape=(dim,), backend=backend))
+        self.bias = Parameter(zeros(shape=(dim,), backend=backend)) 
         ### END ASSIGN3_2
 
     def forward(self, x: Tensor) -> Tensor:
