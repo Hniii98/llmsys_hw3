@@ -115,7 +115,7 @@ class Linear(Module):
     def _init_param(self, *shape, backend: TensorBackend):
         # Uniform(-1/sqrt(in_size), 1/sqrt(in_size))
         inv = 1.0 / (self.in_size ** 0.5)
-        r = 2 * (rand(shape, backend = backend) - 0.5) * inv
+        r = 2 * (rand(shape, backend=backend) - 0.5) * inv
         return Parameter(r)
 
     def forward(self, x: Tensor):
