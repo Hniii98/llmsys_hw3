@@ -311,8 +311,8 @@ def generate(
             ids_np = np.array(token_ids).reshape(1, -1)
             input = minitorch.tensor_from_numpy(ids_np, backend=backend)
             logits = model(input)
-            next_logits = logits[0:,-1,:]
-            gen_id = minitorch.nn.argmax(next_logits, dim=0)
+            gen_id = np.argmax(logits.to_numpy()[0, -1, :]).astype(int) 
+            
             
             # END ASSIGN3_4
 
