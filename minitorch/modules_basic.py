@@ -33,7 +33,8 @@ class Embedding(Module):
         self.num_embeddings = num_embeddings # Vocab size
         self.embedding_dim  = embedding_dim  # Embedding Dimension
         ### BEGIN ASSIGN3_2
-        self.weights = Parameter(rand(shape=(num_embeddings, embedding_dim), backend=backend))
+        weights_np = np.random.randn(num_embeddings, embedding_dim).astype(np.float32)
+        self.weights = Parameter(tensor_from_numpy(weights_np, backend=backend))
         ### END ASSIGN3_2
     
     def forward(self, x: Tensor):
