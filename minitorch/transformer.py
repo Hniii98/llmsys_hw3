@@ -125,6 +125,7 @@ class MultiHeadAttention(Module):
             mask = self.create_causal_mask(queries_len)
             logits = logits + mask
         score = softmax(logits, dim=3)
+        score = self.dropout(score)
         probs = score @ v
         probs = probs.permute(0, 2, 1, 3).contiguous()
         result = probs.view(batch_size, queries_len, self.n_embd)
